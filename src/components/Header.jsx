@@ -58,7 +58,7 @@ export default function Header() {
   }
 
   return (
-    <div className=' bg-primary w-full flex justify-between h-24 items-center px-2 sm:px-6 xl:px-0 overflow-hidden '>
+    <div className=' bg-primary w-full flex justify-between h-24 items-center px-2 sm:px-6 xl:px-0 overflow-hidden z-30'>
 
       <div className="relative">
         <div className="absolute top-0 left-5 w-12 h-12 bg-purple-300 rounded-full
