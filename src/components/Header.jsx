@@ -30,7 +30,7 @@ export default function Header() {
 
   const [userToggle, setUserToggle] = useState(false);
 
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
   const login = async () => {
 
@@ -113,10 +113,16 @@ export default function Header() {
               {user ? (<img className=' w-7 h-7 rounded-full' src={user.photoURL} alt="user" />) : (<FaUserCircle className=' w-6 h-6 text-teal-300' />)}
             </div>
 
-            <div className=' relative mr-2 xl:mr-5'>
+            <div
+              onClick={() => dispatch({ type: actionType.SET_CARTSHOW, cartShow: !cartShow })}
+              className=' relative mr-2 xl:mr-5 z-10'>
               <div className=' flex items-center cursor-pointer justify-center'>{<FiShoppingBag className=' w-6 h-6 text-teal-300' />}</div>
-              <span className=' absolute flex items-center justify-center 
-                      text-[16px] text-white font-dynapuff font-medium w-5 h-5 -top-1 -right-2 bg-rose-500 rounded-full'>1</span>
+              {
+                cartItems && cartItems.length > 0 && (
+                  <span className=' absolute flex items-center justify-center 
+                      text-[16px] text-white font-dynapuff font-medium cursor-pointer w-5 h-5 -top-2 -right-2 bg-rose-500 rounded-full'>{cartItems.length}</span>
+                )
+              }
             </div>
           </div>
 

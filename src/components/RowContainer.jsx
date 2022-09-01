@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { motion } from 'framer-motion'
 
 import Notfound from '../assets/NotFound.svg'
+import { useStateValue } from '../context/Sateprovider';
+import { actionType } from '../context/reducer';
 const cart = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-white font-poppins font-extrabold">
   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
 </svg>;
@@ -16,7 +18,9 @@ const fire = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24
 
 export default function RowContainer({ flag, data, scroll_left, scroll_right }) {
 
-  console.log(data)
+  const [{ cartItems }, dispatch] = useStateValue();
+
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     document.getElementById('slider').scrollLeft += -300;
@@ -25,6 +29,37 @@ export default function RowContainer({ flag, data, scroll_left, scroll_right }) 
   useEffect(() => {
     document.getElementById('slider').scrollLeft += 300;
   }, [scroll_right]);
+
+  useEffect(() => {
+    addToCart();
+  }, [items]);
+
+  const addToCart = (item) => {
+    // //Total Price
+    // setTotalPrice((prevTotal) => prevTotal + (qty * product.price));
+    // //Increase Total Quantity
+    // setTotalQty((prev) => prev + qty);
+
+    const exist = items.find((item) => item.slug === product.slug);
+
+    if (exist) {
+      setCartItems(
+        cartItems.map((item) =>
+          item.slug === product.slug ? { ...exist, quantity: exist.quantity + qty }
+            : item
+        )
+      );
+    }
+    else {
+      setCartItems(
+        [...cartItems, { ...product, quantity: qty }]
+      );
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+
+  }
 
 
   return (
@@ -39,6 +74,10 @@ export default function RowContainer({ flag, data, scroll_left, scroll_right }) 
                 className=' w-32 h-32 md:w-40 -mt-14 object-contain'
                 src={item?.imageURL} alt="" />
               <motion.div
+                onClick={() => dispatch({
+                  type: actionType.SET_CARTITEMS,
+                  cartItems: cartItems === null ? [item] : [...cartItems, item],
+                })}
                 whileTap={{ scale: 0.75 }}
                 className=' w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer p-1'>
                 {cart}
