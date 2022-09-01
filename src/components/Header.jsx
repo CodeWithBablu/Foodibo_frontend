@@ -30,7 +30,7 @@ export default function Header() {
 
   const [userToggle, setUserToggle] = useState(false);
 
-  const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
+  const [[{ user, cartShow }, dispatch, cartItems]] = useStateValue();
 
   const login = async () => {
 

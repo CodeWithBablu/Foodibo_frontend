@@ -20,7 +20,7 @@ export default function RowContainer({ flag, data, scroll_left, scroll_right }) 
 
   const [{ cartItems }, dispatch] = useStateValue();
 
-  const [items, setItems] = useState([]);
+
 
   useEffect(() => {
     document.getElementById('slider').scrollLeft += -300;
@@ -30,35 +30,10 @@ export default function RowContainer({ flag, data, scroll_left, scroll_right }) 
     document.getElementById('slider').scrollLeft += 300;
   }, [scroll_right]);
 
-  useEffect(() => {
-    addToCart();
-  }, [items]);
-
   const addToCart = (item) => {
     // //Total Price
     // setTotalPrice((prevTotal) => prevTotal + (qty * product.price));
-    // //Increase Total Quantity
-    // setTotalQty((prev) => prev + qty);
-
-    const exist = items.find((item) => item.slug === product.slug);
-
-    if (exist) {
-      setCartItems(
-        cartItems.map((item) =>
-          item.slug === product.slug ? { ...exist, quantity: exist.quantity + qty }
-            : item
-        )
-      );
-    }
-    else {
-      setCartItems(
-        [...cartItems, { ...product, quantity: qty }]
-      );
-    }
-
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-
   }
 
 

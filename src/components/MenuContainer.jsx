@@ -15,7 +15,7 @@ export default function MenuContainer() {
 
   const [filter, setFilter] = useState("chicken");
 
-  const [{ foodItems }, dispatch] = useStateValue();
+  const [[{ foodItems }, dispatch]] = useStateValue();
 
   return (
     <section className=' w-full -mt-12 mb-12 p-2 md:p-4'>

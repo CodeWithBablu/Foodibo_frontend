@@ -53,7 +53,7 @@ export default function CreateContainer() {
   const [alertStatus, setAlertStatus] = useState("danger");
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [{ }, dispatch] = useStateValue();
+  const [[{ }, dispatch]] = useStateValue();
 
   const navigate = useNavigate();
 

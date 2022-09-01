@@ -27,7 +27,7 @@ const minus = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 2
 
 export default function CartContainer() {
 
-  const [{ cartShow }, dispatch] = useStateValue();
+  const [[{ cartShow }, dispatch]] = useStateValue();
 
   return (
     <AnimatePresence>
