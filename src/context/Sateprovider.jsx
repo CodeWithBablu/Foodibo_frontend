@@ -10,17 +10,21 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const onAdd = (product, qty) => {
-    // //Total Price
-    // setTotalPrice((prevTotal) => prevTotal + (qty * product.price));
-    // //Increase Total Quantity
-    // setTotalQty((prev) => prev + qty);
+    //Total Price
+    setTotalPrice((prevTotal) => prevTotal + (qty * product.price));
+    //Increase Total Quantity
+    setTotalQty((prev) => prev + qty);
 
-    const exist = cartItems.find((item) => item.id === product.id);
+    console.log(product)
+    console.log("HI there");
+    console.log(cartItems);
+
+    const exist = cartItems.length > 0 ? cartItems.find(item => item.id === product.id) : null;
 
     if (exist) {
       setCartItems(
         cartItems.map((item) =>
-          item.slug === product.slug ? { ...exist, quantity: exist.quantity + qty }
+          item.id === product.id ? { ...exist, quantity: exist.quantity + qty }
             : item
         )
       );
@@ -30,34 +34,37 @@ export const StateProvider = ({ reducer, initialState, children }) => {
         [...cartItems, { ...product, quantity: qty }]
       );
     }
+
   }
 
-  // const onRemove = (product, qty) => {
-  //   //Total Price
-  //   setTotalPrice((prevTotal) => prevTotal - product.price);
-  //   //Decrease Total Quantity
-  //   setTotalQty((prev) => prev - 1);
+  const onRemove = (product, qty) => {
+    //Total Price
+    setTotalPrice((prevTotal) => prevTotal - product.price);
+    //Decrease Total Quantity
+    setTotalQty((prev) => prev - 1);
 
-  //   const exist = cartItems.find((item) => item.slug === product.slug);
+    const exist = cartItems.find((item) => item.id === product.id);
 
-  //   if (exist.quantity === 1) {
-  //     setCartItems(
-  //       cartItems.filter((item) => item.slug !== product.slug)
-  //     );
-  //   }
-  //   else {
-  //     setCartItems(
-  //       cartItems.map((item) =>
-  //         item.slug === product.slug
-  //           ? { ...exist, quantity: exist.quantity - 1 }
-  //           : item
-  //       )
-  //     );
-  //   }
-  // }
+    if (exist.quantity === 1) {
+      setCartItems(
+        cartItems.filter((item) => item.id !== product.id)
+      );
+    }
+    else {
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === product.id
+            ? { ...exist, quantity: exist.quantity - 1 }
+            : item
+        )
+      );
+    }
+  }
+
+  const [{ user, foodItems, cartShow }, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <stateContext.Provider value={[useReducer(reducer, initialState), cartItems, setCartItems]} >
+    <stateContext.Provider value={{ user, foodItems, cartShow, cartItems, totalQty, totalPrice, dispatch, setCartItems, onAdd, onRemove, setTotalQty, setTotalPrice }}>
       {children}
     </stateContext.Provider >
   );

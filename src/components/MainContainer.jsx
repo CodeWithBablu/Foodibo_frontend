@@ -17,7 +17,7 @@ const rightArrow = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="
 
 
 export default function MainContainer() {
-  const [[{ foodItems, cartShow }, dispatch]] = useStateValue();
+  const { foodItems, cartShow, dispatch } = useStateValue();
 
   const [scroll_left, setScroll_Left] = useState(0);
   const [scroll_right, setScroll_Right] = useState(0);

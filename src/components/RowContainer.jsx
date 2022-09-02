@@ -18,7 +18,7 @@ const fire = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24
 
 export default function RowContainer({ flag, data, scroll_left, scroll_right }) {
 
-  const [{ cartItems }, dispatch] = useStateValue();
+  const { cartItems, dispatch, onAdd } = useStateValue();
 
 
 
@@ -30,11 +30,9 @@ export default function RowContainer({ flag, data, scroll_left, scroll_right }) 
     document.getElementById('slider').scrollLeft += 300;
   }, [scroll_right]);
 
-  const addToCart = (item) => {
-    // //Total Price
-    // setTotalPrice((prevTotal) => prevTotal + (qty * product.price));
+  useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }
+  }, [cartItems]);
 
 
   return (
@@ -49,10 +47,7 @@ export default function RowContainer({ flag, data, scroll_left, scroll_right }) 
                 className=' w-32 h-32 md:w-40 -mt-14 object-contain'
                 src={item?.imageURL} alt="" />
               <motion.div
-                onClick={() => dispatch({
-                  type: actionType.SET_CARTITEMS,
-                  cartItems: cartItems === null ? [item] : [...cartItems, item],
-                })}
+                onClick={() => onAdd(item, 1)}
                 whileTap={{ scale: 0.75 }}
                 className=' w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer p-1'>
                 {cart}

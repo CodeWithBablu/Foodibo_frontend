@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { actionType } from "./context/reducer";
 
 function App() {
-  const [[{ }, dispatch]] = useStateValue();
+  const { dispatch, setCartItems } = useStateValue();
 
   const fetchData = async () => {
     await getAllFoodItems().then((data) => {
@@ -21,8 +21,18 @@ function App() {
     })
   }
 
+  const fetchCartData = async () => {
+    const CART_INFO = localStorage.getItem('cartItems');
+    if (CART_INFO) {
+      const cartInfo = JSON.parse(CART_INFO);
+      setCartItems(cartInfo);
+    }
+
+  }
+
   useEffect(() => {
     fetchData();
+    fetchCartData();
   }, []);
 
 

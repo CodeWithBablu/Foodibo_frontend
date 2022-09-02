@@ -30,7 +30,10 @@ export default function Header() {
 
   const [userToggle, setUserToggle] = useState(false);
 
-  const [[{ user, cartShow }, dispatch, cartItems]] = useStateValue();
+  const { user, cartShow, totalQty, cartItems, dispatch } = useStateValue();
+
+  console.log(`cart: ${typeof (cartItems.length)}`);
+  console.log(`total: ${typeof (totalQty)}`);
 
   const login = async () => {
 
@@ -118,9 +121,9 @@ export default function Header() {
               className=' relative mr-2 xl:mr-5 z-10'>
               <div className=' flex items-center cursor-pointer justify-center'>{<FiShoppingBag className=' w-6 h-6 text-teal-300' />}</div>
               {
-                cartItems && cartItems.length > 0 && (
+                totalQty > 0 && (
                   <span className=' absolute flex items-center justify-center 
-                      text-[16px] text-white font-dynapuff font-medium cursor-pointer w-5 h-5 -top-2 -right-2 bg-rose-500 rounded-full'>{cartItems.length}</span>
+                      text-[16px] text-white font-dynapuff font-medium cursor-pointer w-5 h-5 -top-2 -right-2 bg-rose-500 rounded-full'>{`${totalQty}`}</span>
                 )
               }
             </div>
