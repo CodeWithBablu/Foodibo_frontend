@@ -3,20 +3,19 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { navLinks } from '../constants';
 
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { FiShoppingBag } from 'react-icons/fi'
 import { FaUserCircle } from 'react-icons/fa'
 
 import { app } from '../../firebase.config';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 import { useStateValue } from '../context/Sateprovider';
 import { actionType } from '../context/reducer';
-
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+import { useEffect } from 'react';
 
 
-const logOut = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+const logOutImg = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
 </svg>;
 
@@ -28,29 +27,35 @@ const newItem = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0
 
 export default function Header() {
 
+  //AUTh0 login
+  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } = useAuth0();
+
   const [userToggle, setUserToggle] = useState(false);
 
-  const { user, cartShow, totalQty, cartItems, dispatch } = useStateValue();
+  const { cartShow, totalQty, cartItems, dispatch } = useStateValue();
 
-  console.log(`cart: ${typeof (cartItems.length)}`);
-  console.log(`total: ${typeof (totalQty)}`);
+
+  useEffect(() => {
+    dispatch({
+      type: actionType.SET_USER,
+      user: user
+    })
+
+    localStorage.setItem('user', JSON.stringify(user));
+
+  }, [user])
+
 
   const login = async () => {
 
-    const { user: { providerData, refreshToken } } = await signInWithPopup(auth, provider);
-
-    dispatch({
-      type: actionType.SET_USER,
-      user: providerData[0]
-    })
-
-    localStorage.setItem('user', JSON.stringify(providerData[0]));
-
-    console.log(user);
+    await loginWithRedirect();
 
   }
 
-  const logout = () => {
+  const logOut = () => {
+
+    logout({ returnTo: window.location.origin });
+
     setUserToggle(false);
     localStorage.clear();
 
@@ -113,7 +118,7 @@ export default function Header() {
                 user ? setUserToggle((prev) => !prev) : login()
               }}
               className=' flex items-center cursor-pointer z-10 rounded-full justify-center mr-2'>
-              {user ? (<img className=' w-7 h-7 rounded-full' src={user.photoURL} alt="user" />) : (<FaUserCircle className=' w-6 h-6 text-teal-300' />)}
+              {!isLoading && isAuthenticated ? (<img className=' w-7 h-7 rounded-full' src={user.picture} alt="user" />) : (<FaUserCircle className=' w-6 h-6 text-teal-300' />)}
             </div>
 
             <div
@@ -158,8 +163,8 @@ export default function Header() {
 
             <li>
               <span
-                onClick={() => logout()}
-                className='flex items-center mb-2 hover:scale-105 text-rose-400 hover:text-lime-200 duration-200 ease-in-out '>Logout {logOut} </span>
+                onClick={() => logOut()}
+                className='flex items-center mb-2 hover:scale-105 text-rose-400 hover:text-lime-200 duration-200 ease-in-out '>Logout {logOutImg} </span>
             </li>
 
           </ul>

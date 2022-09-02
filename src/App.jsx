@@ -12,7 +12,6 @@ function App() {
 
   const fetchData = async () => {
     await getAllFoodItems().then((data) => {
-      console.log(data);
 
       dispatch({
         type: actionType.SET_FOODITEMS,
@@ -22,11 +21,11 @@ function App() {
   }
 
   const fetchCartData = async () => {
-    const CART_INFO = localStorage.getItem('cartItems');
-    if (CART_INFO) {
-      const cartInfo = JSON.parse(CART_INFO);
-      setCartItems(cartInfo);
-    }
+    const CART_INFO = await localStorage.getItem('cartItems');
+
+    const cartInfo = await JSON.parse(CART_INFO);
+    console.log(cartInfo);
+    setCartItems(cartInfo);
 
   }
 

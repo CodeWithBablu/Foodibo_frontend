@@ -23,6 +23,22 @@ const minus = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 2
 </svg>;
 
 
+//Animation variants
+const card = {
+  hidden: { opacity: 0, scale: 0.8 },
+  show: { opacity: 1, scale: 1 },
+}
+
+const cards = {
+  hidden: { opacity: 1 },
+  show: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.6,
+      staggerChildren: 0.1,
+    }
+  },
+}
 
 
 
@@ -63,11 +79,19 @@ export default function CartContainer() {
           cartItems && cartItems.length > 0 ? (
             <div className=' w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col'>
 
-              <div className=' w-full h-3/6 md:h-510 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-hide'>
+              <motion.div
+                layout
+                variants={cards}
+                initial="hidden"
+                animate="show"
+                className=' w-full h-3/6 md:h-510 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-hide'>
                 {/* cart item */}
                 {
                   cartItems && cartItems.map((item) => (
-                    <div key={item.id} className=' w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2'>
+                    <motion.div
+                      layout
+                      variants={card}
+                      key={item.id} className=' w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2'>
                       <img
                         className=' w-20 h-20 max-w-[60px] rounded-full object-contain'
                         src={item?.imageURL} alt="" />
@@ -91,11 +115,11 @@ export default function CartContainer() {
                           {plus}
                         </motion.div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))
                 }
 
-              </div>
+              </motion.div>
               {/* Cart total section */}
               <div className=' w-full h-3/6 gap-2 flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center md:h-auto md:justify-evenly px-8 py-2'>
 
@@ -138,6 +162,6 @@ export default function CartContainer() {
 
 
       </motion.div>
-    </AnimatePresence>
+    </AnimatePresence >
   )
 }
