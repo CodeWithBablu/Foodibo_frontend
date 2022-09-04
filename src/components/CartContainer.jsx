@@ -56,6 +56,8 @@ const cards = {
 
 export default function CartContainer() {
 
+  const URL = import.meta.env.VITE_BASE_URL;
+
   const { user } = useAuth0();
 
   const { cartItems, cartShow, totalPrice, dispatch, setTotalQty, setTotalPrice, setCartItems, onRemove, onAdd } = useStateValue();
@@ -76,7 +78,7 @@ export default function CartContainer() {
       cartItems: cartItems,
     }
 
-    const response = await fetch('http://localhost:5000/stripi', {
+    const response = await fetch(`${URL}/stripe`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(stripeData),

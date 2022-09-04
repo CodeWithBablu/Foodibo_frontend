@@ -7,13 +7,15 @@ import { motion } from "framer-motion";
 
 export default function Profile() {
 
+  const URL = import.meta.env.VITE_BASE_URL;
+
   const { user, isAuthenticated } = useAuth0();
 
   const [orders, setOrders] = useState(null);
 
 
   async function fetchUserOrders() {
-    const response = await fetch('http://localhost:5000/userorders', {
+    const response = await fetch(`${URL}/userorders`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user),

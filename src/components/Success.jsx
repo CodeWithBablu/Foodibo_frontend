@@ -11,6 +11,8 @@ import { useStateValue } from '../context/Sateprovider';
 
 export default function Success() {
 
+  const URL = import.meta.env.VITE_BASE_URL;
+
   const { setTotalQty, setTotalPrice, setCartItems } = useStateValue();
 
   const params = useParams();
@@ -20,7 +22,7 @@ export default function Success() {
 
   async function fetchSession() {
 
-    const Order = await (await fetch(`http://localhost:5000/order/${params.id}`)).json();
+    const Order = await (await fetch(`${URL}/order/${params.id}`)).json();
     setOrder(Order);
   }
 

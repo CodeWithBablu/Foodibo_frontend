@@ -2,7 +2,6 @@
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { motion } from "framer-motion"
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { storage } from "../../firebase.config";
 
