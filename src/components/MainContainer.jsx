@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HomeContainer from './HomeContainer';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import RowContainer from './RowContainer';
 import { useStateValue } from '../context/Sateprovider';
 import MenuContainer from './MenuContainer';
@@ -57,12 +57,13 @@ export default function MainContainer() {
       </section>
 
       <MenuContainer />
-
-      {
-        cartShow && (
-          <CartContainer />
-        )
-      }
+      <AnimatePresence>
+        {
+          cartShow && (
+            <CartContainer />
+          )
+        }
+      </AnimatePresence>
     </div>
   )
 }

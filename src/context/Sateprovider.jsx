@@ -15,9 +15,6 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     //Increase Total Quantity
     setTotalQty((prev) => prev + qty);
 
-    console.log(product)
-    console.log("HI there");
-    console.log(cartItems);
 
     const exist = cartItems.length > 0 ? cartItems.find(item => item.id === product.id) : null;
 
