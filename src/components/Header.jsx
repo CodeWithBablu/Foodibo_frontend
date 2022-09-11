@@ -55,9 +55,6 @@ export default function Header() {
       if (userInfo !== null && user === undefined) {
         localStorage.setItem('user', userInfo);
 
-        console.log(`User info`);
-        console.log(userInfo);
-        console.log("hi");
         dispatch({
           type: actionType.SET_USER,
           user: await JSON.parse(userInfo)

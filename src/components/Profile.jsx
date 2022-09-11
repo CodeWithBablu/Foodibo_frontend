@@ -29,6 +29,8 @@ export default function Profile() {
     }
     );
 
+    console.log(userInfo);
+
     setUserInfo(userInfo);
 
     const userOrders = await (response.json());
@@ -48,11 +50,11 @@ export default function Profile() {
       transition={{ duration: 2 }}
     >
       {
-        isAuthenticated && userInfo && orders && (
+        userInfo && orders && (
           <div className=" my-10 md:mx-10 min-h-screen font-poppins">
             <div className="py-10 flex flex-col items-center bg-gray-900 gap-4 sm:shadow-xl sm:shadow-lime-300">
-              <h2 className=" text-xl text-white font-bold ">{user.name}</h2>
-              <p className="text-cyan-200 text-md font-bold ">{user.email}</p>
+              <h2 className=" text-xl text-white font-bold ">{userInfo.name}</h2>
+              <p className="text-cyan-200 text-md font-bold ">{userInfo.email}</p>
               <p className="text-indigo-500 text-md font-bold ">This is Your Order History !!</p>
               <div className=" space-y-4 overflow-y-scroll scrollbar-hide max-h-[800px]">
                 {
