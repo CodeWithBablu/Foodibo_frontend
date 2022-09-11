@@ -60,6 +60,8 @@ export default function Header() {
           type: actionType.SET_USER,
           user: await JSON.parse(userInfo)
         })
+
+        user = await JSON.parse(userInfo);
       }
       else {
         localStorage.setItem('user', JSON.stringify(user));
