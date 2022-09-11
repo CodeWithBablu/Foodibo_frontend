@@ -50,7 +50,7 @@ export default function Header() {
 
       const userInfo = localStorage.getItem('user');
 
-      if (userInfo !== null) {
+      if (userInfo !== null && user === undefined) {
         localStorage.setItem('user', userInfo);
 
         console.log(`User info`);
