@@ -46,14 +46,26 @@ export default function Header() {
 
   useEffect(() => {
 
-    function setUserData() {
+    async function setUserData() {
 
-      localStorage.setItem('user', JSON.stringify(user));
+      const userInfo = await JSON.parse(localStorage.getItem('user'));
 
-      dispatch({
-        type: actionType.SET_USER,
-        user: user
-      })
+      if (userInfo) {
+        localStorage.setItem('user', JSON.stringify(userInfo));
+
+        dispatch({
+          type: actionType.SET_USER,
+          user: userInfo
+        })
+      }
+      else {
+        localStorage.setItem('user', JSON.stringify(user));
+
+        dispatch({
+          type: actionType.SET_USER,
+          user: user
+        })
+      }
 
     }
 
