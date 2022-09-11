@@ -29,8 +29,6 @@ export default function Profile() {
     }
     );
 
-    console.log(userInfo);
-
     setUserInfo(userInfo);
 
     const userOrders = await (response.json());

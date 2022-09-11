@@ -44,7 +44,6 @@ export default function Header() {
 
   const { cartShow, totalQty, cartItems, dispatch } = useStateValue();
 
-  console.log(user);
 
   useEffect(() => {
 
