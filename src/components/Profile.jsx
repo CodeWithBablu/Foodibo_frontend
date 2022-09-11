@@ -11,16 +11,25 @@ export default function Profile() {
 
   const { user, isAuthenticated } = useAuth0();
 
+  const [userInfo, setUserInfo] = useState(null);
+
   const [orders, setOrders] = useState(null);
 
 
   async function fetchUserOrders() {
+
+    var userInfo = localStorage.getItem('user');
+
+    userInfo = userInfo === undefined || userInfo === null ? user : await JSON.parse(userInfo);
+
     const response = await fetch(`${URL}/userorders`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
+      body: JSON.stringify(userInfo),
     }
     );
+
+    setUserInfo(userInfo);
 
     const userOrders = await (response.json());
     setOrders(userOrders);
@@ -39,7 +48,7 @@ export default function Profile() {
       transition={{ duration: 2 }}
     >
       {
-        isAuthenticated && user && orders && (
+        isAuthenticated && userInfo && orders && (
           <div className=" my-10 md:mx-10 min-h-screen font-poppins">
             <div className="py-10 flex flex-col items-center bg-gray-900 gap-4 sm:shadow-xl sm:shadow-lime-300">
               <h2 className=" text-xl text-white font-bold ">{user.name}</h2>
