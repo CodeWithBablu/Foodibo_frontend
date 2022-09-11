@@ -42,14 +42,22 @@ export default function Header() {
 
   const { cartShow, totalQty, cartItems, dispatch } = useStateValue();
 
+  console.log(user);
 
   useEffect(() => {
-    dispatch({
-      type: actionType.SET_USER,
-      user: user
-    })
 
-    localStorage.setItem('user', JSON.stringify(user));
+    function setUserData() {
+
+      localStorage.setItem('user', JSON.stringify(user));
+
+      dispatch({
+        type: actionType.SET_USER,
+        user: user
+      })
+
+    }
+
+    setUserData();
 
   }, [user])
 
