@@ -154,7 +154,7 @@ export default function Header() {
 
               <div
                 onClick={() => {
-                  user ? setUserToggle((prev) => !prev) : login()
+                  userprofile ? setUserToggle((prev) => !prev) : login()
                 }}
                 className=' flex items-center cursor-pointer z-10 rounded-full justify-center mr-2'>
                 {userprofile ? (<img className=' w-7 h-7 rounded-full' src={userprofile.picture} alt="user" />) : (<FaUserCircle className=' w-6 h-6 text-teal-300' />)}
@@ -165,7 +165,7 @@ export default function Header() {
                 <ul className=' space-y-2 list-none flex flex-col  text-cyan-200 font-dynapuff font-medium cursor-pointer text-[18px]'>
 
                   {
-                    user && user.email === "babasahebbhalekar8245@gmail.com" && (
+                    userprofile && userprofile.email === "babasahebbhalekar8245@gmail.com" && (
                       <li>
                         <Link to={'/createItem'}>
                           <span onClick={() => setUserToggle(false)} className='flex items-center hover:scale-105 hover:text-lime-200 gap-2 duration-200 ease-in-out'>New Item {newItem} </span>
@@ -184,7 +184,7 @@ export default function Header() {
                   }
 
                   {
-                    user && (
+                    userprofile && (
                       <Link to={'/profile'} onClick={() => setUserToggle(false)}>
                         <li>
                           <span
