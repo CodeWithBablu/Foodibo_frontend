@@ -48,14 +48,17 @@ export default function Header() {
 
     async function setUserData() {
 
-      const userInfo = await JSON.parse(localStorage.getItem('user'));
+      const userInfo = localStorage.getItem('user');
 
-      if (userInfo) {
-        localStorage.setItem('user', JSON.stringify(userInfo));
+      if (userInfo !== null) {
+        localStorage.setItem('user', userInfo);
 
+        console.log(`User info`);
+        console.log(userInfo);
+        console.log("hi");
         dispatch({
           type: actionType.SET_USER,
-          user: userInfo
+          user: await JSON.parse(userInfo)
         })
       }
       else {
