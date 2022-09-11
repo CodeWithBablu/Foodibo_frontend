@@ -58,9 +58,17 @@ export default function CartContainer() {
 
   const URL = import.meta.env.VITE_BASE_URL;
 
-  const { user } = useAuth0();
+  var userInfo;
 
-  const { cartItems, cartShow, totalPrice, dispatch, setTotalQty, setTotalPrice, setCartItems, onRemove, onAdd } = useStateValue();
+  const { user, cartItems, cartShow, totalPrice, dispatch, setTotalQty, setTotalPrice, setCartItems, onRemove, onAdd } = useStateValue();
+
+  if (!user) {
+    const { user } = useAuth0();
+    userInfo = user;
+  }
+  else {
+    userInfo = user;
+  }
 
   function clearCart() {
     localStorage.setItem('cartItems', JSON.stringify([]));
@@ -74,7 +82,7 @@ export default function CartContainer() {
     const stripe = await getStripi();
 
     const stripeData = {
-      user: user,
+      user: userInfo,
       cartItems: cartItems,
     }
 
