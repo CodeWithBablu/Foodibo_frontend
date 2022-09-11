@@ -73,6 +73,8 @@ export default function Header() {
           type: actionType.SET_USER,
           user: user
         })
+
+        setUserProfile(await JSON.parse(user));
       }
 
     }
