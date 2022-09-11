@@ -71,7 +71,7 @@ export default function Header() {
           user: user
         })
 
-        setUserProfile(await JSON.parse(user));
+        setUserProfile(user);
       }
 
     }
