@@ -40,6 +40,8 @@ export default function Header() {
 
   const [userToggle, setUserToggle] = useState(false);
 
+  const [userprofile, setUserProfile] = useState(null)
+
   const { cartShow, totalQty, cartItems, dispatch } = useStateValue();
 
   console.log(user);
@@ -61,7 +63,8 @@ export default function Header() {
           user: await JSON.parse(userInfo)
         })
 
-        user = await JSON.parse(userInfo);
+        setUserProfile(await JSON.parse(userInfo));
+
       }
       else {
         localStorage.setItem('user', JSON.stringify(user));
@@ -154,7 +157,7 @@ export default function Header() {
                   user ? setUserToggle((prev) => !prev) : login()
                 }}
                 className=' flex items-center cursor-pointer z-10 rounded-full justify-center mr-2'>
-                {!isLoading && isAuthenticated ? (<img className=' w-7 h-7 rounded-full' src={user.picture} alt="user" />) : (<FaUserCircle className=' w-6 h-6 text-teal-300' />)}
+                {userprofile ? (<img className=' w-7 h-7 rounded-full' src={userprofile.picture} alt="user" />) : (<FaUserCircle className=' w-6 h-6 text-teal-300' />)}
               </div>
 
               <div className={`${userToggle ? 'flex' : 'hidden'} z-50 py-2 pl-3 bg-black-gradient absolute top-8 right-0 
